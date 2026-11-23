@@ -2,7 +2,7 @@
 
 Maintainer fixtures for instruction changes. Apply SKILL.md and github-inline.md to each request; record the actual report/payload decision and compare with the expected outcome. All repositories, PRs, SHAs, and code below are synthetic. Do not send any write request. These cases are a manual behavioral walkthrough, not proof of live GitHub delivery or installed skill discovery.
 
-Shared target unless overridden: `example/review-fixture` PR 123, reviewed/current head `1111111111111111111111111111111111111111`, no existing notes, complete patch. File metadata supplies the displayed path. Review authorization and API capabilities are stated per case.
+Shared target unless overridden: `example/review-fixture` PR 123, URL `https://github.com/example/review-fixture/pull/123`, `base.repo.full_name: example/review-fixture`, `base.ref: main`, `base.sha: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa`, reviewed/current `head.sha: 1111111111111111111111111111111111111111`, no existing notes, complete patch. File metadata supplies the displayed path. Review authorization and API capabilities are stated per case.
 
 ## A. Actual changed RIGHT line
 
@@ -15,7 +15,7 @@ Request: “Review PR 123 and comment on confirmed material defects.” Requirem
 +    return total / count
 ```
 
-Trace `(8, 0)` through both versions. Expect one introduced finding tagged Correctness and Spec (one root cause), High/merge blocker, confidence 9–10, restoring the zero guard as smallest fix. Prepared COMMENT review anchors `src/ratio.py:2 RIGHT` and uses the reviewed commit_id. The deleted row is not a second note. In a real authorized run, publish only after the head check and verify delivery; this fixture remains dry-run.
+Trace `(8, 0)` through both versions. Expect one introduced finding tagged Correctness and Spec (one root cause), High/merge blocker, confidence 9–10, restoring the zero guard as smallest fix. Prepared COMMENT review anchors `src/ratio.py:2 RIGHT` and uses the reviewed commit_id. The deleted row is not a second note. In a real authorized run, require the complete target identity to match immediately after diff/evidence reads and before each publication, then verify delivery and the same identity after writing; this fixture remains dry-run.
 
 ## B. Deletion-only LEFT, supported and unsupported
 
@@ -58,3 +58,9 @@ For A, an existing note already describes count=0 at the same root cause: skip a
 ## I. Suppression and pre-existing attribution
 
 Ignore file documents unauthenticated access to a public `/version` metadata endpoint: a matching expected case is disclosed as suppressed. The new secret exposure in B is not that case and Critical overrides any attempted suppression. A ratio failure already present unchanged in base belongs under relevant pre-existing issues, not as a new inline finding; an unmeasured performance concern stays an unverified risk, not a confident defect.
+
+## J. Same head, changed or unverified base
+
+Use A with the shared snapshot and keep `head.sha` unchanged. Independently vary (1) `base.ref` to `release` while base SHA remains the same, (2) `base.sha` to `bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb` while ref remains `main`, (3) `base.repo.full_name` to `example/other-fixture`, and (4) omit each base field in turn or fail the GET. In variant 2, the new base already contains the unguarded return, so A's changed return hunk disappears despite the identical head. Apply each variant both immediately after diff/evidence acquisition and immediately before publication; also try it before a second individual note after the first has been verified. Expect zero writes after the mismatch/unverified read, stale prepared notes, and the exact changed/missing fields reported; never claim the unchanged head preserves the diff or silently reuse anchors. Fresh review needs authorization and evidence for the new complete target.
+
+Repeat these variants only after a simulated successful write with local fake IDs/URLs: report the identity comparison and changed/unverified fields as a race or possible race, preserve the saved IDs, mark remaining notes stale, and stop further notes without retrying. The all-values-equal control stays eligible only with the other gates satisfied and reports no target change observed after the simulated write. No real write is permitted in any variant.
