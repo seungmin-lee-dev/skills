@@ -1,8 +1,20 @@
-# codex-review (Claude Code 플러그인)
+# codex-review — 독립 Codex 리뷰 스킬 + Claude Code 플러그인
 
-> **동결(frozen).** Codex 구독 종료로 현재 이 플러그인은 유지보수하지 않는다.
-> `critical-code-review` 정책 정본은 [`critical-review/agents/critical-code-reviewer.md`](../critical-review/agents/critical-code-reviewer.md) 로 옮겨졌고,
-> 여기 번들된 Codex용 사본은 동기화되지 않는다. Codex 구독을 재개하면 정본에서 이쪽으로 반영할 것.
+## Codex에서 직접 리뷰하기 (Claude 불필요)
+
+[`critical-code-review`](skills/setup-codex-review/codex-skills/critical-code-review/SKILL.md)는 독립적으로 유지보수하는 Codex 스킬이다.
+[`직접 설치·확인 방법`](skills/setup-codex-review/codex-skills/README.md)을 따라 설치하고 Codex에서 `$critical-code-review`로 호출한다.
+기존 번들 경로와 이름은 유지한다. CLI 사용 시 Codex 설치·인증이 필요하고, GitHub inline 게시에는 해당 PR의 쓰기 권한과 명시적 게시 요청이 필요하다.
+
+- 기본 결과: 간결한 한국어, Critical/High/Medium/Low, merge blocker/follow-up, 독립적인 confidence, 파일/줄·실패 근거·영향·최소 수정안.
+- PR/연결 이슈 요구사항을 diff와 대조해 `Spec` 누락을 찾고, 미확인 자료·기존 문제·미실행 테스트를 구분한다.
+- 문제 줄에 댓글을 요청하면 검토 head와 변경 줄 좌표를 재확인해 중복 없는 inline note를 게시한다. 일반 리뷰 요청은 게시용 초안만 제공한다.
+- 기본 패널 토론은 없으며, 상세·구조 심층 모드는 요청 시 선택한다. Claude 정책을 자동 동기화하는 사본이 아니다.
+
+## 별도 경로: Claude→Codex 반복 루프
+
+아래는 Claude Code 플러그인 설치/운영 안내다. `codex-loop`의 별도 프롬프트·JSON 스키마·수정 반복 절차는 독립 스킬의 출력/inline 게시 계약과 다르다.
+이번 독립 스킬 갱신은 그 파이프라인의 스키마나 Claude 워크플로를 변경하지 않는다.
 
 코드는 **클로드**가 짜고, 리뷰·문서는 **Codex CLI**에 오프로드하는 리뷰 워크플로.
 무거운 리뷰·문서 추론이 Codex(OpenAI) 쪽에서 돌아 **클로드 토큰을 절감**한다.
@@ -26,7 +38,7 @@
 ## 팀원 설치 (1회)
 ```
 # 1) 마켓플레이스 등록
-/plugin marketplace add seungmin-lee-dev/claude-tools
+/plugin marketplace add seungmin-lee-dev/skills
 
 # 2) 플러그인 설치
 /plugin install codex-review@claude-tools

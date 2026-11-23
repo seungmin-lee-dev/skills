@@ -1,4 +1,4 @@
 interface:
   display_name: "Critical Code Review"
-  short_description: "Korean CTO review for code and architecture"
-  default_prompt: "Use $critical-code-review to give a compact Korean senior/QA/CTO review covering correctness, tests, production risk, and evidence-based modularity."
+  short_description: "Evidence-based Korean review with severity and inline notes"
+  default_prompt: "Use $critical-code-review to review this change in concise Korean with severity, merge blockers or follow-ups, evidence, and smallest fixes; prepare inline notes unless posting is explicitly authorized."
