@@ -1,6 +1,6 @@
 # skills
 
-Claude Code 일반 스킬 모음 (플러그인 마켓플레이스).
+Claude Code 플러그인과 독립 Codex 스킬 모음.
 한 레포에 여러 플러그인을 담고, 마켓플레이스를 한 번 등록한 뒤 필요한 플러그인을 설치한다.
 
 > 저장소 이름은 `claude-tools` → `skills` 로 바뀌었다(2026-11-13). 옛 주소는 GitHub 가 새 주소로 연결해 준다.
@@ -25,6 +25,11 @@ Claude Code 일반 스킬 모음 (플러그인 마켓플레이스).
   - 설치(대표): `npm install -g @openai/codex`
   - 로그인: 터미널에서 `codex login`
 - 이후 아무 레포/경로에서 **`/codex-review:codex-loop`** 사용 (자연어 "코덱스로 리뷰해줘"도 트리거됨).
+
+**Codex만 사용하는 경우:** Claude 설치 없이 [`critical-code-review` 직접 설치](codex-review/skills/setup-codex-review/codex-skills/README.md)를 따른다.
+Codex에서 `$critical-code-review`로 호출하며, 심각도·merge blocker/follow-up·근거·최소 수정안을 보고한다.
+문제 줄에 댓글을 요청하면 권한·head·diff 좌표를 확인해 inline note를 게시하고, 일반 리뷰 요청은 게시용 초안만 만든다.
+이 독립 스킬과 Claude가 실행하는 `codex-loop` JSON 반복 파이프라인은 별개다.
 
 ## 플러그인 목록
 
@@ -62,11 +67,12 @@ ego-browser(ego lite)로 로컬 웹 앱을 직접 눌러 보며 QA. 남의 PR �
 ## 구조
 ```
 .claude-plugin/marketplace.json   # 이 레포 = 마켓플레이스 (이름: claude-tools)
-codex-review/                     # 플러그인 (Codex 기반, 현재 동결)
+codex-review/                     # Claude→Codex 루프 + 독립 Codex 리뷰 스킬
   .claude-plugin/plugin.json
   skills/
     codex-loop/SKILL.md
     setup-codex-review/SKILL.md
+    setup-codex-review/codex-skills/critical-code-review/SKILL.md
 critical-review/                  # 플러그인 (Claude 단독)
   .claude-plugin/plugin.json
   agents/critical-code-reviewer.md
